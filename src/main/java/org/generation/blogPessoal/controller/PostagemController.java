@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -43,12 +44,26 @@ public class PostagemController {
 	
 	@PostMapping("/salvar")
 	public ResponseEntity<Postagem> post (@RequestBody Postagem postagem){
-		return ResponseEntity.status(201).body(repository.save(postagem));
+		return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(postagem));
 	}
 	
-	@PutMapping()
+	@PutMapping("/atualizar")
 	public ResponseEntity<Postagem> put (@RequestBody Postagem postagem){
 		return ResponseEntity.status(HttpStatus.OK).body(repository.save(postagem));
+	}
+	
+	/*@DeleteMapping("/deletar")
+	public ResponseEntity<String> deleteById(@RequestBody Postagem postagem){
+		repository.delete(postagem);
+		
+		return ResponseEntity.status(200).body("Deletado");
+	}*/
+	
+	@DeleteMapping("/deletar/{id}")
+	public void deleteById(@PathVariable Long id){
+		repository.deleteById(id);
+		
+		
 	}
 }
 
